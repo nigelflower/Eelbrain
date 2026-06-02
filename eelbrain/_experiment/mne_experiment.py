@@ -19,6 +19,7 @@ from collections.abc import Sequence
 import numpy as np
 import mne
 from mne.minimum_norm import make_inverse_operator, apply_inverse, apply_inverse_epochs, apply_inverse_raw
+from mne.io.constants import FIFF
 import mne_bids
 from mne_bids import BIDSPath, get_entity_vals
 
@@ -4342,7 +4343,7 @@ class Pipeline(FileTree):
             bemsol = mne.make_bem_solution(bem)
         # ignore_ref should be True for KIT
         if 'kit_system_id' in raw.info:
-            is_kit = (raw.info['kit_system_id'] is not None) or (raw.info['chs'][0]['coil_type'].__str__() == '6001 (FIFFV_COIL_KIT_GRAD)')
+            is_kit = (raw.info['kit_system_id'] is not None) or (raw.info['chs'][0]['coil_type'] == FIFF.FIFFV_COIL_KIT_GRAD)
         else:
             raise RuntimeError("Unclear how to set ignor_ref for legacy file without kit_system_id")
 
